@@ -141,6 +141,53 @@ mvn test -Dtest=TesteListagemRacas#deveRetornarListaCompletaDeRacasComSucesso
 mvn test -X
 ```
 
+### Executando por Tags
+
+```bash
+# Executar suite completa (runner único)
+mvn test -Dtest=SuiteTestesCompleta
+
+# Executar apenas testes críticos (smoke)
+mvn test -Dgroups="smoke"
+
+# Executar apenas testes de performance
+mvn test -Dgroups="performance"
+
+# Executar apenas testes negativos (cenários de erro)
+mvn test -Dgroups="negativo"
+
+# Executar por feature
+mvn test -Dgroups="listagem-racas"
+mvn test -Dgroups="imagens-por-raca"
+mvn test -Dgroups="imagens-aleatorias"
+mvn test -Dgroups="integracao"
+
+# Combinar tags (OR)
+mvn test -Dgroups="smoke | integracao"
+```
+
+### Tags Disponíveis
+
+| Tag | Tipo | Descrição | Testes |
+|-----|------|-----------|--------|
+| `smoke` | Cenário | Testes críticos — caminho feliz principal de cada endpoint | 4 |
+| `positivo` | Cenário | Cenário principal de sucesso (mesmo testes que smoke) | 4 |
+| `negativo` | Cenário | Cenários de erro e entrada inválida | 3 |
+| `contrato` | Cenário | Validação da estrutura e formato do JSON retornado | 6 |
+| `dados` | Cenário | Validação do conteúdo e dados específicos retornados | 6 |
+| `url` | Cenário | Validação do formato e conteúdo das URLs das imagens | 2 |
+| `performance` | Cenário | Testes de tempo de resposta | 4 |
+| `headers` | Cenário | Validação dos headers HTTP da resposta | 2 |
+| `consistencia` | Cenário | Verificação de consistência entre chamadas ou endpoints | 2 |
+| `aleatoriedade` | Cenário | Verificação do comportamento aleatório da API | 1 |
+| `limite` | Cenário | Testes de comportamento em valores-limite (boundary) | 1 |
+| `comparacao` | Cenário | Comparação de comportamento entre endpoints distintos | 1 |
+| `robustez` | Cenário | Estabilidade da API em diferentes cenários consecutivos | 1 |
+| `listagem-racas` | Feature | Todos os testes de listagem de raças | 8 |
+| `imagens-por-raca` | Feature | Todos os testes de imagens por raça | 6 |
+| `imagens-aleatorias` | Feature | Todos os testes de imagens aleatórias | 10 |
+| `integracao` | Feature | Todos os testes de integração | 6 |
+
 ### Visualizando Relatórios
 
 ```bash
