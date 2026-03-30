@@ -1,0 +1,18 @@
+# Build
+target/
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# IDE - VS Code (manter apenas configurações do projeto)
+.vscode/*.log
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Maven
+*.class

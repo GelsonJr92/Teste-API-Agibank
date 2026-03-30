@@ -5,13 +5,13 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.southsystem</groupId>
+    <groupId>com.agibank</groupId>
     <artifactId>dog-api-automation-tests</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>South System - Dog API Automation Tests</name>
-    <description>Projeto de automação de testes para Dog API - Teste técnico South System</description>
+    <name>Agibank - Dog API Automation Tests</name>
+    <description>Projeto de automação de testes para Dog API - Teste técnico Agibank</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -25,8 +25,8 @@
         <allure-maven.version>2.13.0</allure-maven.version>
         <aspectj.version>1.9.21</aspectj.version>
         <lombok.version>1.18.30</lombok.version>
-        <javafaker.version>1.0.2</javafaker.version>
         <jackson.version>2.16.1</jackson.version>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
         <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
     </properties>
 
@@ -84,29 +84,22 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- JavaFaker para geração de dados de teste -->
-        <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
-            <version>${javafaker.version}</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- Jackson para manipulação JSON -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         <plugins>
             <!-- Maven Surefire Plugin -->
             <plugin>
@@ -172,8 +165,8 @@
                         </goals>
                         <configuration>
                             <target>
-                                <!-- Copiar environment.properties para allure-results -->
-                                <copy file="${project.basedir}/src/test/resources/environment.properties"
+                                <!-- Copiar environment.properties filtrado para allure-results -->
+                                <copy file="${project.build.testOutputDirectory}/environment.properties"
                                       tofile="${project.build.directory}/allure-results/environment.properties"
                                       failonerror="false"/>
                                 <echo message="✓ Arquivo environment.properties copiado"/>

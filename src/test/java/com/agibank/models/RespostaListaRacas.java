@@ -1,22 +1,19 @@
-package com.southsystem.models;
+package com.agibank.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
-/**
- * Modelo para resposta da API de imagens por raça
- * Endpoint: GET /breed/{breed}/images
- */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RespostaImagensRaca {
-    
+public class RespostaListaRacas {
+
     @JsonProperty("message")
-    private List<String> imagens;
-    
+    private Map<String, List<String>> racas;
+
     @JsonProperty("status")
     private String status;
 }

@@ -12,5 +12,6 @@
     "java.sources": {
         "src/main/java": "main",
         "src/test/java": "test"
-    }
+    },
+    "claudeCodeChat.permissions.yoloMode": true
 }
