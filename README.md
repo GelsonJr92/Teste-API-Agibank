@@ -4,7 +4,7 @@
 ![Maven](https://img.shields.io/badge/Maven-3.9+-blue)
 ![RestAssured](https://img.shields.io/badge/RestAssured-5.4.0-green)
 ![JUnit](https://img.shields.io/badge/JUnit-5.10.1-red)
-![Allure](https://img.shields.io/badge/Allure-2.25.0-yellow)
+![ExtentReports](https://img.shields.io/badge/ExtentReports-5.1.1-blue)
 
 ## Sobre o Projeto
 
@@ -26,7 +26,7 @@ Este projeto foi desenvolvido como parte do teste técnico para o **Agibank**, i
 - **Maven 3.9+**: Gerenciamento de dependências e build
 - **RestAssured 5.4.0**: Framework para testes de API REST
 - **JUnit 5.10.1**: Framework de testes unitários
-- **Allure Reports 2.25.0**: Geração de relatórios HTML visuais
+- **ExtentReports 5.1.1**: Geração de relatórios HTML visuais
 
 ### Ferramentas Auxiliares
 - **Lombok 1.18.30**: Redução de boilerplate code
@@ -48,6 +48,9 @@ src/
     │   └── RespostaImagemAleatoria.java  # Modelo para imagem aleatória
     ├── services/
     │   └── ServicoDogApi.java            # Service Object Pattern
+    ├── reports/
+    │   ├── ExtentReportsManager.java     # Gerenciamento do relatório (singleton)
+    │   └── ExtentReportsExtension.java   # Extensão JUnit 5 (TestWatcher)
     └── tests/
         ├── TesteBase.java                # Classe base para testes
         ├── TesteListagemRacas.java       # Testes de listagem de raças
@@ -191,33 +194,28 @@ mvn test -Dgroups="smoke | integracao"
 ### Visualizando Relatórios
 
 ```bash
-# Gerar e abrir relatório Allure
-mvn allure:serve
-
-# Apenas gerar relatório
-mvn allure:report
+# O relatório é gerado automaticamente ao final de cada execução
+mvn clean test
 
 # Localização do relatório
-target/allure-results/allure-report/index.html
+target/extent-reports/DogApi-Report-<timestamp>.html
 ```
 
 ## Relatórios e Evidências
 
-### Allure Reports
-O projeto gera relatórios HTML interativos com:
+### ExtentReports
+O projeto gera relatórios HTML interativos automaticamente ao final de cada execução:
 
-- **Dashboard**: Visão geral dos resultados
-- **Suites**: Organização por features e stories
-- **Gráficos**: Distribuição de resultados e trends
-- **Timeline**: Linha temporal da execução
-- **Categories**: Categorização de falhas
-- **Environment**: Informações do ambiente de teste
+- **Dashboard**: Visão geral com totais de passou, falhou e foi pulado
+- **Tema Dark**: Interface com tema escuro configurado
+- **System Info**: Informações do ambiente (aplicação, URL, executor, Java)
+- **Timestamp**: Cada execução gera um arquivo separado com data/hora
+- **Detalhes por teste**: Resultado individual com mensagem de falha e stack trace quando aplicável
 
-### Configurações do Allure
-- Épicos, Features e Stories organizados por funcionalidade
-- Steps detalhados para cada ação
-- Categorização de severidade (Critical, Normal, Minor)
-- Descrições detalhadas para cada teste
+### Localização
+```
+target/extent-reports/DogApi-Report-yyyy-MM-dd_HH-mm-ss.html
+```
 
 ## CI/CD Pipeline
 
@@ -243,7 +241,7 @@ O projeto gera relatórios HTML interativos com:
 java.version=17
 test.framework=JUnit 5
 api.framework=RestAssured
-report.framework=Allure Reports
+report.framework=ExtentReports
 build.tool=Maven
 execution.date=${maven.build.timestamp}
 project.version=1.0.0
@@ -252,7 +250,7 @@ project.version=1.0.0
 ### Configurações Maven
 - **Java Target**: 17
 - **Encoding**: UTF-8
-- **Allure Integration**: Automática
+- **ExtentReports**: Geração automática via extensão JUnit 5
 
 ## Troubleshooting
 
@@ -284,7 +282,7 @@ mvn clean compile
 Para dúvidas ou problemas:
 
 1. **Verificar logs**: `target/surefire-reports/`
-2. **Consultar relatório Allure**: Detalhes completos das execuções
+2. **Consultar relatório ExtentReports**: `target/extent-reports/` — detalhes completos das execuções
 3. **Validar ambiente**: Java 17+ e Maven 3.9+
 4. **Revisar configurações**: Verificar `ConfiguracaoApi.java`
 
@@ -292,7 +290,7 @@ Para dúvidas ou problemas:
 
 - **30 testes** implementados e funcionais
 - **100%** de cobertura dos endpoints solicitados
-- **Relatórios Allure** com evidências visuais
+- **Relatórios ExtentReports** com evidências visuais
 - **CI/CD Pipeline** configurado
 - **Documentação completa** e profissional
 - **Boas práticas** aplicadas

@@ -9,23 +9,17 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import io.qameta.allure.*;
 import io.restassured.response.Response;
 import com.agibank.models.RespostaImagensRaca;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Epic("Dog API")
-@Feature("Imagens por Raca")
 @Tag("imagens-por-raca")
 @DisplayName("Testes de Imagens por Raca")
 public class TesteImagensPorRaca extends TesteBase {
 
     @Test
     @Order(1)
-    @Story("Buscar imagens por raca")
     @DisplayName("Deve retornar imagens de uma raca especifica com sucesso")
-    @Description("Verifica se a API retorna imagens de uma raca valida")
-    @Severity(SeverityLevel.CRITICAL)
     @Tag("smoke")
     @Tag("positivo")
     void deveRetornarImagensDeUmaRacaEspecificaComSucesso() {
@@ -41,10 +35,7 @@ public class TesteImagensPorRaca extends TesteBase {
 
     @Test
     @Order(2)
-    @Story("Validar estrutura da resposta")
     @DisplayName("Deve validar estrutura correta da resposta JSON")
-    @Description("Verifica se a estrutura da resposta JSON esta conforme esperado")
-    @Severity(SeverityLevel.NORMAL)
     @Tag("contrato")
     void deveValidarEstruturaDaRespostaJson() {
         RespostaImagensRaca resposta = servicoDogApi.buscarImagensPorRacaComoObjeto("labrador");
@@ -58,10 +49,7 @@ public class TesteImagensPorRaca extends TesteBase {
 
     @Test
     @Order(3)
-    @Story("Validar URLs das imagens")
     @DisplayName("Deve retornar URLs validas de imagens")
-    @Description("Verifica se todas as URLs retornadas sao validas e contem o nome da raca")
-    @Severity(SeverityLevel.NORMAL)
     @Tag("url")
     void deveRetornarUrlsValidasDeImagens() {
         String raca = "labrador";
@@ -76,10 +64,7 @@ public class TesteImagensPorRaca extends TesteBase {
 
     @Test
     @Order(4)
-    @Story("Testar diferentes racas")
     @DisplayName("Deve funcionar com diferentes racas validas")
-    @Description("Verifica se o endpoint funciona corretamente com diferentes racas")
-    @Severity(SeverityLevel.NORMAL)
     @Tag("dados")
     void deveFuncionarComDiferentesRacasValidas() {
         String[] racas = { "bulldog", "poodle", "husky" };
@@ -98,10 +83,7 @@ public class TesteImagensPorRaca extends TesteBase {
 
     @Test
     @Order(5)
-    @Story("Testar raca inexistente")
     @DisplayName("Deve tratar adequadamente raca inexistente")
-    @Description("Verifica como a API lida com racas que nao existem")
-    @Severity(SeverityLevel.NORMAL)
     @Tag("negativo")
     void deveTratarAdequadamenteRacaInexistente() {
         Response resposta = servicoDogApi.buscarImagensPorRaca("racainexistente123");
@@ -113,10 +95,7 @@ public class TesteImagensPorRaca extends TesteBase {
 
     @Test
     @Order(6)
-    @Story("Validar performance")
     @DisplayName("Deve responder em tempo aceitavel")
-    @Description("Verifica se a API responde em menos de 3 segundos")
-    @Severity(SeverityLevel.MINOR)
     @Tag("performance")
     void deveResponderEmTempoAceitavel() {
         Response resposta = servicoDogApi.buscarImagensPorRaca("labrador");

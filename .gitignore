@@ -1,6 +1,13 @@
 # Build
 target/
 
+# Allure (binário local e resultados)
+.allure/
+allure-results/
+
+# ExtentReports
+extent-reports/
+
 # IDE - IntelliJ IDEA
 .idea/
 *.iml

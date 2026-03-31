@@ -21,9 +21,7 @@
         <!-- Versões das dependências -->
         <rest-assured.version>5.4.0</rest-assured.version>
         <junit.version>5.10.1</junit.version>
-        <allure.version>2.25.0</allure.version>
-        <allure-maven.version>2.13.0</allure-maven.version>
-        <aspectj.version>1.9.21</aspectj.version>
+        <extentreports.version>5.1.1</extentreports.version>
         <lombok.version>1.18.30</lombok.version>
         <jackson.version>2.16.1</jackson.version>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
@@ -62,18 +60,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Allure TestNG/JUnit5 -->
+        <!-- ExtentReports para relatórios de teste -->
         <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit5</artifactId>
-            <version>${allure.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-rest-assured</artifactId>
-            <version>${allure.version}</version>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>${extentreports.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -116,74 +107,37 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
-                    <systemPropertyVariables>
-                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-                    </systemPropertyVariables>
                     <!-- Configurações para output em tempo real -->
                     <printSummary>true</printSummary>
                     <useFile>false</useFile>
                     <trimStackTrace>false</trimStackTrace>
                     <reportFormat>plain</reportFormat>
                     <forkCount>1</forkCount>
-                    <reuseForks>false</reuseForks>
+                    <reuseForks>true</reuseForks>
                     <excludes>
                         <exclude>**/*Runner*</exclude>
                     </excludes>
                 </configuration>
                 <dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjweaver</artifactId>
-                        <version>${aspectj.version}</version>
-                    </dependency>
                 </dependencies>
             </plugin>
 
-            <!-- Allure Maven Plugin -->
-            <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>${allure-maven.version}</version>
-                <configuration>
-                    <reportVersion>${allure.version}</reportVersion>
-                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
-                    <reportDirectory>${project.build.directory}/allure-results/allure-report</reportDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>allure-report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Maven Antrun Plugin - Copy Environment -->
+            <!-- Maven Antrun Plugin - Create report directory -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <id>copy-environment</id>
+                        <id>create-report-dir</id>
                         <phase>process-test-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
                             <target>
-                                <!-- Copiar environment.properties filtrado para allure-results -->
-                                <copy file="${project.build.testOutputDirectory}/environment.properties"
-                                      tofile="${project.build.directory}/allure-results/environment.properties"
-                                      failonerror="false"/>
-                                <echo message="✓ Arquivo environment.properties copiado"/>
-                                <echo message="✓ Relatório Allure gerado com sucesso!"/>
-                                <echo message="✓ Execute: mvn allure:serve para visualizar"/>
+                                <mkdir dir="${project.build.directory}/extent-reports"/>
+                                <echo message="✓ Diretorio de relatórios ExtentReports criado"/>
                             </target>
                         </configuration>
                     </execution>

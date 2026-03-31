@@ -10,6 +10,6 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SuiteDisplayName("Suite Completa - Dog API Tests")
 @SelectPackages("com.agibank.tests")
 @ExcludeClassNamePatterns(".*Runner.*")
-//@IncludeTags("")
+// @IncludeTags("")
 public class DogApiTestRunner {
 }

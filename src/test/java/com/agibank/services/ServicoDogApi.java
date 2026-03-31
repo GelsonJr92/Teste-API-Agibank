@@ -4,7 +4,6 @@ import com.agibank.config.ConfiguracaoApi;
 import com.agibank.models.RespostaImagemAleatoria;
 import com.agibank.models.RespostaImagensRaca;
 import com.agibank.models.RespostaListaRacas;
-import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
@@ -24,7 +23,6 @@ public class ServicoDogApi {
         }
     }
 
-    @Step("Buscar todas as racas disponiveis")
     public Response buscarTodasRacas() {
         Response response = given()
                 .contentType(ConfiguracaoApi.CONTENT_TYPE)
@@ -40,12 +38,10 @@ public class ServicoDogApi {
         return response;
     }
 
-    @Step("Buscar todas as racas e converter para objeto")
     public RespostaListaRacas buscarTodasRacasComoObjeto() {
         return buscarTodasRacas().as(RespostaListaRacas.class);
     }
 
-    @Step("Buscar imagens da raca: {raca}")
     public Response buscarImagensPorRaca(String raca) {
         Response response = given()
                 .contentType(ConfiguracaoApi.CONTENT_TYPE)
@@ -62,12 +58,10 @@ public class ServicoDogApi {
         return response;
     }
 
-    @Step("Buscar imagens da raca {raca} e converter para objeto")
     public RespostaImagensRaca buscarImagensPorRacaComoObjeto(String raca) {
         return buscarImagensPorRaca(raca).as(RespostaImagensRaca.class);
     }
 
-    @Step("Buscar imagem aleatoria")
     public Response buscarImagemAleatoria() {
         Response response = given()
                 .contentType(ConfiguracaoApi.CONTENT_TYPE)
@@ -83,12 +77,10 @@ public class ServicoDogApi {
         return response;
     }
 
-    @Step("Buscar imagem aleatoria e converter para objeto")
     public RespostaImagemAleatoria buscarImagemAleatoriaComoObjeto() {
         return buscarImagemAleatoria().as(RespostaImagemAleatoria.class);
     }
 
-    @Step("Buscar {quantidade} imagens aleatorias")
     public Response buscarMultiplasImagensAleatorias(int quantidade) {
         Response response = given()
                 .contentType(ConfiguracaoApi.CONTENT_TYPE)
@@ -105,7 +97,6 @@ public class ServicoDogApi {
         return response;
     }
 
-    @Step("Buscar imagem aleatoria da raca: {raca}")
     public Response buscarImagemAleatoriaPorRaca(String raca) {
         Response response = given()
                 .contentType(ConfiguracaoApi.CONTENT_TYPE)
@@ -122,7 +113,6 @@ public class ServicoDogApi {
         return response;
     }
 
-    @Step("Buscar {quantidade} imagens aleatorias da raca: {raca}")
     public Response buscarMultiplasImagensAleatoriasPorRaca(String raca, int quantidade) {
         Response response = given()
                 .contentType(ConfiguracaoApi.CONTENT_TYPE)
